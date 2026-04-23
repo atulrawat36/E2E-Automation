@@ -122,7 +122,7 @@ Validations include:
 ### 1. Clone repository
 
 ```
-git clone <your-repo-url>
+git clone https://github.com/atulrawat36/E2E-Automation.git
 cd E2E-Automation
 ```
 
