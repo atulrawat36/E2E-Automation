@@ -1,123 +1,136 @@
-# 🧪 QA Automation Framework — SauceDemo
+# QA Automation Framework — SauceDemo
 
-## 📌 Overview
+## Overview
 
-This project implements an end-to-end **UI automation framework** for the SauceDemo application using **Playwright (Python)** and **pytest**.
+This project contains an end-to-end UI automation framework for the SauceDemo application using Playwright and pytest.
+It follows a Page Object Model (POM) design and focuses on validating core user flows.
 
-The framework follows a **Page Object Model (POM)** design and focuses on **risk-based testing**, prioritizing critical user journeys such as login, cart, checkout, and sorting.
-
----
-
-## 🎯 Objective
-
-* Validate **core business flows** (login → cart → checkout)
-* Ensure **functional correctness and stability**
-* Build a **maintainable and scalable automation framework**
-* Demonstrate **QA thinking and prioritization**
+In addition to UI automation, API tests have also been implemented using Playwright’s request context.
 
 ---
 
-## 🏗️ Framework Design
+## Objective
 
-### ✅ Page Object Model (POM)
-
-* All locators and UI interactions are encapsulated in page classes
-* Tests contain only business logic
-* No raw locators used in test files
-* Improves maintainability and readability
+* Validate critical user journeys (login, cart, checkout)
+* Ensure application stability and correctness
+* Build a clean and maintainable automation framework
+* Cover both UI and API testing scenarios
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
-```bash
-tests/
-├── test_login.py
-├── test_products.py
-├── test_cart.py
-├── test_checkout.py
-├── test_sorting.py
-
+```
 pages/
-├── base_page.py
-├── login_page.py
-├── products_page.py
-├── cart_page.py
-└── checkout_page.py
+  base_page.py
+  login_page.py
+  products_page.py
+  cart_page.py
+  checkout_page.py
+
+tests/
+  test_login.py
+  test_products.py
+  test_cart.py
+  test_checkout.py
+  test_sorting.py
+
+api_tests/
+  test_api.py
+
+reports/
+
+conftest.py
+pytest.ini
+requirements.txt
+README.md
 ```
 
 ---
 
-## ⚙️ Configuration (`pytest.ini`)
+## Configuration
 
-```ini
+The project uses the following pytest configuration:
+
+```
 [pytest]
 addopts = -v --headed --slowmo=500
 base_url = https://www.saucedemo.com
 ```
 
-### 🔍 Behavior
+### Notes:
 
-* `--headed` → runs tests with visible browser (useful for debugging/demo)
-* `--slowmo=500` → slows execution for better observation
-* `-v` → verbose output
-
----
-
-## 🧪 Test Coverage
-
-### 🔐 Authentication
-
-* Standard user login
-* Locked user validation
-* Problem user
-* Performance glitch user
-* Negative scenarios (invalid credentials, empty fields)
+* Tests run in **headed mode by default** (browser visible)
+* Slow execution is enabled for easier observation
+* This can be overridden during execution
 
 ---
 
-### 🛒 Cart
+## Test Coverage
+
+### UI Testing
+
+**Login**
+
+* Valid and invalid login scenarios
+* Different user types (standard, locked, etc.)
+
+**Products**
+
+* Product visibility and details
+* Sorting (price and name)
+
+**Cart**
 
 * Add/remove items
-* Cart badge validation
+* Badge validation
 * Multiple item handling
-* Navigation to cart page
-* **Session persistence after page reload**
+* Cart persistence after reload
 
----
-
-### 🧾 Checkout
+**Checkout**
 
 * End-to-end checkout flow
-* Form validation (negative scenarios)
+* Form validation
 
 ---
 
-### 🔃 Sorting
+### API Testing
 
-* Price: Low → High
-* Price: High → Low
-* Name: A → Z
-* Name: Z → A
+API tests are implemented using `APIRequestContext`.
 
-(All sorting validations include assertions)
+Endpoints covered:
+
+* GET /posts
+* GET /posts/{id}
+* Invalid ID handling
+* POST /posts
+* PUT /posts/{id}
+* DELETE /posts/{id}
+* GET /users/{id}/posts
+
+Validations include:
+
+* Status codes
+* Response structure
+* Data types
+* Basic business checks
 
 ---
 
-## 🚀 Setup Instructions
+## Setup Instructions
 
 ### 1. Clone repository
 
-```bash
+```
 git clone <your-repo-url>
-cd playwright-saucedemo-automation
+cd E2E-Automation
 ```
 
 ---
 
 ### 2. Create virtual environment
 
-```bash
+```
 python -m venv .venv
 ```
 
@@ -125,15 +138,15 @@ python -m venv .venv
 
 ### 3. Activate environment
 
-#### Windows
+Windows:
 
-```bash
+```
 .venv\Scripts\activate
 ```
 
-#### Mac/Linux
+Mac/Linux:
 
-```bash
+```
 source .venv/bin/activate
 ```
 
@@ -141,103 +154,97 @@ source .venv/bin/activate
 
 ### 4. Install dependencies
 
-```bash
+```
 python -m pip install --upgrade pip
 pip install pytest pytest-playwright pytest-xdist pytest-html
 ```
 
 ---
 
-### 5. Install Playwright browsers
+### 5. Install browsers
 
-```bash
+```
 playwright install
 ```
 
 ---
 
-## ▶️ Test Execution
+## Test Execution
 
-### Run tests (default: headed + slow execution)
+### Run UI tests (default)
 
-```bash
+```
 pytest
 ```
 
 ---
 
-### Run tests in headless mode (override config)
+### Run in headless mode
 
-```bash
-pytest -o addopts="" --browser chromium
+```
+pytest -o addopts=""
 ```
 
 ---
 
-### Run tests in parallel
+### Run API tests
 
-```bash
+```
+pytest api_tests/
+```
+
+---
+
+### Run in parallel
+
+```
 pytest -n auto -o addopts=""
 ```
 
 ---
 
-### Run parallel + HTML report (recommended)
+### Run with HTML report
 
-```bash
+```
 pytest -n auto -o addopts="" --html=reports/report.html --self-contained-html
 ```
 
 ---
 
-## 📊 Reporting
+## Reporting
 
-* HTML reports are generated in `/reports`
-* Includes:
+HTML reports are generated in the `reports/` folder and include:
 
-  * Test results (pass/fail)
-  * Execution summary
-  * Failure details
-
----
-
-## 🧠 Testing Approach
-
-This framework follows a **risk-based testing strategy**:
-
-| Priority | Area            |
-| -------- | --------------- |
-| P0       | Login, Checkout |
-| P1       | Cart, Sorting   |
-| P2       | UI validations  |
-
-Focus areas:
-
-* Business-critical flows
-* High-impact user scenarios
-* Real-world behavior (e.g., session persistence)
+* Test execution summary
+* Pass/Fail results
+* Failure details
 
 ---
 
-## ⚖️ Trade-offs
+## Approach
 
-* API testing not included (not part of assignment)
-* Focus on critical flows over exhaustive coverage
-* Headed execution by default for clarity (not speed)
+Testing is based on a simple risk-based approach:
+
+* High priority: login, checkout
+* Medium priority: cart, sorting
+* Lower priority: UI validations
+
+Focus was kept on:
+
+* Core functionality
+* Real user behavior
+* Stability over exhaustive coverage
+
+---
+
+## Notes
+
+* API testing is included as part of the assignment
+* Headed execution is used by default for visibility
+* Parallel execution is supported for faster runs
 
 ---
 
-## 🔮 Future Improvements
+## Author
 
-* CI/CD integration
-* API testing layer
-* Cross-browser execution
-* Advanced reporting (Allure)
-
----
-
-## 👤 Author
-
-**Atul Rawat**
-
----
+Atul Rawat

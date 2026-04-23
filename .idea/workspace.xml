@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b469db33-a831-406e-a1a2-0cc3c5322c59" name="Changes" comment="First commit">
+      <change afterPath="$PROJECT_DIR$/REPORT.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/STRATEGY.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api_tests/test_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
